@@ -17,3 +17,5 @@ output/
 
 # VS Code (optional)
 .vscode/
+resumes/*
+!resumes/.gitkeep

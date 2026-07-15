@@ -1,6 +1,6 @@
-def main():
-    print("Hello from ai-resume-matcher!")
+from pathlib import Path
+from services.extractor import extract_text
 
-
-if __name__ == "__main__":
-    main()
+resume_path = Path("resumes/Arnav_Amrit_resume.pdf")  
+text = extract_text(resume_path)
+print(text)
