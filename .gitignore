@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environment
+.venv/
+
+# Environment variables
+.env
+
+# Generated output
+output/
+
+# VS Code (optional)
+.vscode/
