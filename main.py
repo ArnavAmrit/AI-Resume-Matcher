@@ -1,37 +1,26 @@
 from pathlib import Path
 
+from config import JOB_DESCRIPTION
 from services.extractor import extract_text
+from services.job_parser import parse_job_description
 from services.resume_parser import parse_resume
+from services.matcher import final_score
 
+
+# Step 1: Extract resume text
 resume_path = Path("resumes/Arnav_Amrit_resume.pdf")
-
 resume_text = extract_text(resume_path)
 
+# Step 2: Parse the resume
 resume = parse_resume(resume_text)
 
-print("\n========== Resume ==========\n")
+# Step 3: Parse the job description
+job = parse_job_description(JOB_DESCRIPTION)
 
-print(f"Name: {resume.name}")
-print(f"Email: {resume.email}")
-print(f"Phone: {resume.phone}")
-print(f"Experience: {resume.total_experience_years} years")
+# Step 4: Match resume with job
+match = final_score(job, resume)
 
-print("\nSkills:")
-print(resume.skills)
+# Step 5: Print the result
+print("\n========== MATCH RESULT ==========\n")
 
-print("\nExperiences:")
-for exp in resume.experiences:
-    print(f"\nCompany: {exp.company}")
-    print(f"Role: {exp.role}")
-    print(f"Duration: {exp.duration}")
-    print(f"Description: {exp.description}")
-    print(f"Skills Used: {exp.skills_used}")
-
-print("\nEducation:")
-print(resume.education)
-
-print("\nProjects:")
-print(resume.projects)
-
-print("\nCertifications:")
-print(resume.certifications)
+print(match.model_dump_json(indent=4))
