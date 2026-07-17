@@ -1,8 +1,8 @@
 # AI Resume Matcher
 
-An AI-powered Resume Matcher built with Python that extracts resume information, parses job descriptions using Groq Structured Outputs, and will eventually compare candidate resumes against job requirements using AI.
+An AI-powered Resume Matcher built with Python that extracts resume information, parses both resumes and job descriptions using Groq Structured Outputs, and will eventually compare candidates against job requirements using AI.
 
-This project is part of my AI Engineering learning journey, with a focus on clean architecture, modular design, and production-ready software engineering practices.
+This project is part of my AI Engineering learning journey, focusing on clean architecture, modular design, and production-ready software engineering practices.
 
 ---
 
@@ -12,21 +12,21 @@ This project is part of my AI Engineering learning journey, with a focus on clea
 
 - Extract text from PDF resumes
 - Extract text from DOCX resumes
-- Parse job descriptions using Groq LLM
-- Generate structured JSON using Pydantic JSON Schema
+- Parse job descriptions into structured Pydantic models
+- Parse resumes into structured Pydantic models
+- Generate structured JSON using Groq Structured Outputs
 - Convert LLM responses into strongly typed Pydantic models
-- Modular architecture following Separation of Concerns
+- Modular architecture following Separation of Concerns (SoC)
 
 ### 🚧 Coming Next
 
-- Resume parsing using Groq
-- Resume Pydantic model
-- Resume JSON export
-- Resume vs Job skill matching
+- Resume vs Job matching
+- Skill similarity scoring
 - Match percentage calculation
 - AI hiring recommendation
+- Resume ranking
 - RAG integration with Qdrant
-- Vector search for semantic resume matching
+- Semantic search using vector embeddings
 
 ---
 
@@ -35,21 +35,23 @@ This project is part of my AI Engineering learning journey, with a focus on clea
 ```text
 AI-Resume-Matcher/
 │
-├── config.py                  # Project configuration
-├── main.py                    # Application entry point
+├── config.py
+├── main.py
 ├── pyproject.toml
 ├── uv.lock
 │
 ├── models/
-│   ├── job.py                 # Job description Pydantic model
+│   ├── job.py
+│   ├── resume.py
 │   └── __init__.py
 │
 ├── services/
-│   ├── extractor.py           # PDF/DOCX text extraction
-│   ├── parser.py              # Groq job description parser
+│   ├── extractor.py
+│   ├── parser.py
+│   ├── resume_parser.py
 │   └── __init__.py
 │
-├── resumes/                   # Local resumes (ignored by Git)
+├── resumes/
 ├── output/
 └── README.md
 ```
@@ -59,27 +61,28 @@ AI-Resume-Matcher/
 ## Current Architecture
 
 ```text
-                Resume
-                   │
-                   ▼
-          Text Extraction
-                   │
-                   ▼
-             Raw Resume Text
-                   │
-                   ▼
-      (Resume Parser - Coming Next)
+                 Resume PDF / DOCX
+                         │
+                         ▼
+                Text Extraction
+                         │
+                         ▼
+                  Raw Resume Text
+                         │
+                         ▼
+                 Resume Parser (LLM)
+                         │
+                         ▼
+                  Resume Pydantic Model
 
-Job Description
-        │
-        ▼
- Groq Structured Outputs
-        │
-        ▼
-      Pydantic Model
-        │
-        ▼
-    Structured Job Data
+
+                Job Description Text
+                         │
+                         ▼
+                   Job Parser (LLM)
+                         │
+                         ▼
+                   Job Pydantic Model
 ```
 
 ---
@@ -98,22 +101,11 @@ Job Description
 
 ## Setup
 
-Clone the repository:
-
 ```bash
 git clone <repository-url>
 cd AI-Resume-Matcher
-```
 
-Create a virtual environment:
-
-```bash
 uv venv
-```
-
-Install dependencies:
-
-```bash
 uv sync
 ```
 
@@ -123,7 +115,7 @@ Create a `.env` file:
 GROQ_API_KEY=your_api_key
 ```
 
-Run the project:
+Run:
 
 ```bash
 python main.py
@@ -133,28 +125,29 @@ python main.py
 
 ## Roadmap
 
-### Phase 1 — Data Extraction
+### Phase 1 — Extraction
 
-- [x] Project initialization
-- [x] PDF text extraction
-- [x] DOCX text extraction
+- [x] Project setup
+- [x] PDF extraction
+- [x] DOCX extraction
 
 ### Phase 2 — AI Parsing
 
-- [x] Job Description parser
-- [ ] Resume parser
-- [ ] JSON export
+- [x] Job description parser
+- [x] Resume parser
 
-### Phase 3 — Resume Matching
+### Phase 3 — Matching Engine
 
+- [ ] Resume vs Job comparison
 - [ ] Skill matching
+- [ ] Experience matching
 - [ ] Match percentage
 - [ ] AI recommendation
 
 ### Phase 4 — Retrieval-Augmented Generation (RAG)
 
-- [ ] Qdrant vector database
 - [ ] Resume embeddings
+- [ ] Qdrant integration
 - [ ] Semantic search
 - [ ] Context-aware recommendations
 
@@ -162,16 +155,13 @@ python main.py
 
 ## Software Engineering Principles
 
-This project is intentionally designed using:
-
-- Separation of Concerns
+- Separation of Concerns (SoC)
 - Single Responsibility Principle (SRP)
 - Modular Architecture
-- Interface-first Design
 - Pydantic Data Models
 - Structured LLM Outputs
-- Incremental Git Commits
 - Type Hints
+- Incremental Git Workflow
 
 ---
 
@@ -181,12 +171,12 @@ This project is helping me learn:
 
 - AI Engineering
 - LLM Application Development
-- Structured Outputs
 - Prompt Engineering
+- Structured Outputs
 - Pydantic
 - Software Architecture
-- Git Workflow
 - Production-ready Python
+- Git Best Practices
 
 ---
 
